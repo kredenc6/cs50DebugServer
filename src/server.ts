@@ -9,8 +9,21 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT && strToNumber(process.env.PORT) || DEFAULT_PORT;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
-  res.send("Hello World!") // test
+  res.send("Hello World!")
+});
+
+app.post("/", (req, res) => {
+  const data = req.body;
+  if (data) {
+    console.log(data);
+    return res.send("OK");
+  }
+
+  return res.sendStatus(400);
 });
 
 app.listen(port, () => {
